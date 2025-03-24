@@ -1,7 +1,7 @@
 {
-  "name": "gamefi-project",
+  "name": "metaquest-ai",
   "version": "1.0.0",
-  "description": "AI-powered GameFi project on Aptos using Move Agent Kit",
+  "description": "MetaQuest AI - An AI-powered GameFi project on Aptos using Move Agent Kit",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

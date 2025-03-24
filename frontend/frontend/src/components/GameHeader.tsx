@@ -5,7 +5,7 @@ export const GameHeader: React.FC = () => {
   return (
     <header className="game-header glass-panel">
       <div className="header-left">
-        <h1 className="game-title">Aptos GameFi</h1>
+        <h1 className="game-title">MetaQuest AI</h1>
         <div className="player-stats">
           <div className="stat-item">
             <span className="stat-label">Level</span>

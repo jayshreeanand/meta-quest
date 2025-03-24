@@ -1,6 +1,6 @@
-# Aptos GameFi Project
+# MetaQuest AI
 
-A modern GameFi project built on the Aptos blockchain using Move Agent Kit and React.
+A modern GameFi project built on the Aptos blockchain using Move Agent Kit and React. MetaQuest AI combines artificial intelligence with blockchain gaming to create an immersive, dynamic gaming experience where quests and content are generated based on player behavior and preferences.
 
 ## Project Structure
 
