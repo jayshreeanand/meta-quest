@@ -12,9 +12,9 @@
   "dependencies": {
     "@aptos-labs/ts-sdk": "^1.0.0",
     "@langchain/core": "^0.1.0",
-    "@langchain/langgraph": "^0.0.1",
+    "@langchain/langgraph": "^0.0.5",
+    "@langchain/openai": "^0.0.14",
     "dotenv": "^16.0.3",
-    "openai": "^4.0.0",
     "typescript": "^5.0.0"
   },
   "devDependencies": {

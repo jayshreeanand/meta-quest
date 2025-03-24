@@ -1,21 +1,22 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { StateGraph } from "@langchain/langgraph";
-import { StateAnnotation } from "../state";
+import { GameStateAnnotation } from "../state";
 import { Quest } from "../types/game";
 
 const contentGenerator = new ChatOpenAI({
   modelName: "gpt-4",
   temperature: 0.7,
+  openAIApiKey: process.env.OPENAI_API_KEY,
 });
 
-export const contentGeneratorNode = async (state: any) => {
+export const contentGeneratorNode = async (state: GameStateAnnotation): Promise<GameStateAnnotation> => {
   const { messages, gameState } = state;
   
   const prompt = `You are a game content generator for an RPG game on Aptos blockchain.
   Current game state:
   - Player Level: ${gameState.player.level}
   - Current Level: ${gameState.currentLevel}
-  - Active Quests: ${gameState.activeQuests.length}
+  - Active Quests: ${gameState.player.activeQuests.length}
   
   Generate a new quest that is appropriate for the player's level and current game state.
   The quest should include:
@@ -35,5 +36,8 @@ export const contentGeneratorNode = async (state: any) => {
       ...gameState,
       availableQuests: [...gameState.availableQuests, newQuest],
     },
+    isContentGenerationQuery: true,
+    isAssetOperationQuery: false,
+    isQuestOperationQuery: false,
   };
 }; 

@@ -1,18 +1,13 @@
-import { ChatOpenAI } from "@langchain/openai";
 import { StateGraph } from "@langchain/langgraph";
-import { StateAnnotation } from "../state";
+import { GameStateAnnotation } from "../state";
 import { GameAsset } from "../types/game";
 import { AptosClient } from "aptos";
-
-const assetManager = new ChatOpenAI({
-  modelName: "gpt-4",
-  temperature: 0.7,
-});
+import { assetManager } from "./ai-agents";
 
 // Initialize Aptos client (you'll need to set up your network and credentials)
-const client = new AptosClient("https://fullnode.testnet.aptoslabs.com/v1");
+const client = new AptosClient(process.env.APTOS_NODE_URL || "https://fullnode.testnet.aptoslabs.com/v1");
 
-export const assetManagerNode = async (state: any) => {
+export const assetManagerNode = async (state: GameStateAnnotation): Promise<GameStateAnnotation> => {
   const { messages, gameState } = state;
   
   const prompt = `You are an asset manager for an RPG game on Aptos blockchain.
@@ -44,5 +39,8 @@ export const assetManagerNode = async (state: any) => {
         inventory: [...gameState.player.inventory, ...newAssets],
       },
     },
+    isContentGenerationQuery: false,
+    isAssetOperationQuery: true,
+    isQuestOperationQuery: false,
   };
 }; 
