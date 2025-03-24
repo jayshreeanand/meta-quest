@@ -1,12 +1,15 @@
 import { StateGraph } from "@langchain/langgraph";
 import { GameStateAnnotation } from "../state";
 import { GameAsset } from "../types/game";
-import { AptosClient } from "aptos";
+import { Aptos, Network, AptosConfig } from "@aptos-labs/ts-sdk";
 import { assetManager } from "./ai-agents";
 import { SystemMessage, HumanMessage, AIMessage } from "@langchain/core/messages";
 
-// Initialize Aptos client (you'll need to set up your network and credentials)
-const client = new AptosClient(process.env.APTOS_NODE_URL || "https://fullnode.testnet.aptoslabs.com/v1");
+// Initialize Aptos client with the new SDK
+const config = new AptosConfig({
+  network: Network.TESTNET
+});
+const client = new Aptos(config);
 
 export const assetManagerNode = async (state: GameStateAnnotation): Promise<GameStateAnnotation> => {
   const { messages, gameState } = state;
