@@ -2,6 +2,7 @@ import { ChatOpenAI } from "@langchain/openai";
 import { StateGraph } from "@langchain/langgraph";
 import { GameStateAnnotation } from "../state";
 import { Quest } from "../types/game";
+import { SystemMessage, HumanMessage, AIMessage } from "@langchain/core/messages";
 
 const contentGenerator = new ChatOpenAI({
   modelName: "gpt-4",
@@ -12,8 +13,11 @@ const contentGenerator = new ChatOpenAI({
 export const contentGeneratorNode = async (state: GameStateAnnotation): Promise<GameStateAnnotation> => {
   const { messages, gameState } = state;
   
-  const prompt = `You are a game content generator for an RPG game on Aptos blockchain.
-  Current game state:
+  const systemPrompt = `You are a game content generator for an RPG game on Aptos blockchain.
+Your responses must be valid JSON objects only. Do not include any explanatory text or markdown formatting.
+The response must exactly match the specified JSON structure.`;
+
+  const userPrompt = `Current game state:
   - Player Level: ${gameState.player.level}
   - Current Level: ${gameState.currentLevel}
   - Active Quests: ${gameState.player.activeQuests.length}
@@ -25,19 +29,42 @@ export const contentGeneratorNode = async (state: GameStateAnnotation): Promise<
   3. Required items/assets
   4. Rewards (NFTs or tokens)
   
-  Format the response as a JSON object matching the Quest interface.`;
+  Return a JSON object with this exact structure:
+  {
+    "id": "string",
+    "title": "string",
+    "description": "string",
+    "requirements": [],
+    "rewards": [],
+    "difficulty": "EASY" | "MEDIUM" | "HARD",
+    "status": "ACTIVE",
+    "playerAddress": "string"
+  }`;
 
-  const response = await contentGenerator.invoke(prompt);
-  const newQuest: Quest = JSON.parse(response.content.toString());
-  
-  return {
-    messages: [...messages, response],
-    gameState: {
-      ...gameState,
-      availableQuests: [...gameState.availableQuests, newQuest],
-    },
-    isContentGenerationQuery: true,
-    isAssetOperationQuery: false,
-    isQuestOperationQuery: false,
-  };
+  try {
+    const response = await contentGenerator.invoke([
+      new SystemMessage(systemPrompt),
+      new HumanMessage(userPrompt)
+    ]);
+    
+    const newQuest: Quest = JSON.parse(response.content.toString());
+    
+    return {
+      messages: [...messages, response],
+      gameState: {
+        ...gameState,
+        availableQuests: [...gameState.availableQuests, newQuest],
+      },
+      isContentGenerationQuery: true,
+      isAssetOperationQuery: false,
+      isQuestOperationQuery: false,
+    };
+  } catch (error) {
+    console.error("Error in content generator:", error);
+    // Return the original state if there's an error
+    return {
+      ...state,
+      messages: [...messages, new AIMessage("Error generating content")],
+    };
+  }
 }; 
