@@ -1,103 +1,133 @@
-# AI-Powered GameFi Project on Aptos
+# Aptos GameFi Project
 
-This project demonstrates an AI-powered GameFi (Game Finance) system built on the Aptos blockchain using Move Agent Kit. The system uses AI agents to generate dynamic game content, manage in-game assets, and create an adaptive gameplay experience.
-
-## Features
-
-- **AI Content Generation**: Dynamic quest and level generation based on player behavior
-- **Asset Management**: Automated NFT and token operations for in-game items and rewards
-- **Quest System**: Adaptive quest system with dynamic difficulty and rewards
-- **Blockchain Integration**: Seamless interaction with Aptos blockchain for asset management
-
-## Prerequisites
-
-- Node.js (v14 or higher)
-- npm or pnpm
-- Aptos CLI (optional, for contract deployment)
-- OpenAI API key
-
-## Setup
-
-1. Clone the repository:
-
-```bash
-git clone <repository-url>
-cd gamefi-project
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-# or
-pnpm install
-```
-
-3. Create a `.env` file in the root directory:
-
-```env
-OPENAI_API_KEY=your_openai_api_key
-APTOS_NODE_URL=https://fullnode.testnet.aptoslabs.com/v1
-```
-
-4. Build the project:
-
-```bash
-npm run build
-# or
-pnpm build
-```
-
-## Usage
-
-1. Run the example script:
-
-```bash
-npm run start
-# or
-pnpm start
-```
-
-2. The example will demonstrate:
-   - Quest generation
-   - Asset management
-   - Game state updates
-   - Blockchain interactions
+A modern GameFi project built on the Aptos blockchain using Move Agent Kit and React.
 
 ## Project Structure
 
 ```
 gamefi-project/
-├── src/
-│   ├── agents/
-│   │   ├── content-generator.ts
-│   │   ├── asset-manager.ts
-│   │   └── quest-manager.ts
-│   ├── types/
-│   │   └── game.ts
-│   ├── state.ts
-│   ├── index.ts
-│   └── example.ts
-├── package.json
-├── tsconfig.json
-└── README.md
+├── frontend/                 # React frontend application
+│   ├── frontend/            # Create React App with TypeScript
+│   │   ├── src/
+│   │   │   ├── components/  # React components
+│   │   │   ├── styles/     # CSS styles
+│   │   │   └── App.tsx     # Main application component
+│   │   └── package.json    # Frontend dependencies
+│   └── package.json        # Root package.json
+├── src/                     # Backend source code
+│   ├── content-generator.ts # AI content generation
+│   ├── asset-manager.ts    # Asset management
+│   ├── quest-manager.ts    # Quest system
+│   └── index.ts           # Main entry point
+└── package.json           # Root dependencies
 ```
 
-## Architecture
+## Prerequisites
 
-The project uses a LangGraph-based workflow with three main agents:
+- Node.js (v16 or higher)
+- npm or yarn
+- Aptos CLI
+- Move Agent Kit
 
-1. **Content Generator**: Creates dynamic quests and levels
-2. **Asset Manager**: Handles NFT and token operations
-3. **Quest Manager**: Manages quest progression and rewards
+## Setup Instructions
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   cd gamefi-project
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   # Install root dependencies
+   npm install
+
+   # Install frontend dependencies
+   cd frontend/frontend
+   npm install
+   ```
+
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
+
+## Development
+
+### Running the Frontend
+
+1. Navigate to the frontend directory:
+
+   ```bash
+   cd frontend/frontend
+   ```
+
+2. Start the development server:
+
+   ```bash
+   npm start
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Running the Backend
+
+1. From the root directory:
+   ```bash
+   npm run dev
+   ```
+
+## Features
+
+- Modern React UI with TypeScript
+- Glassmorphism design with gaming aesthetics
+- Real-time game state management
+- AI-generated game content
+- Asset management system
+- Quest system
+- Wallet integration
+
+## Components
+
+### GameHeader
+
+- Player stats display
+- Wallet connection
+- Player profile
+
+### GameSidebar
+
+- Navigation menu
+- Quick actions
+- Social features
+
+### GameDashboard
+
+- Active quests
+- Game statistics
+- Recent items
+- Daily rewards
+
+## Styling
+
+The project uses a modern gaming aesthetic with:
+
+- Glassmorphism effects
+- Gradient backgrounds
+- Glowing animations
+- Custom scrollbars
+- Responsive design
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
